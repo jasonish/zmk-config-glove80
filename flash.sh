@@ -10,7 +10,28 @@ RGHT=GLV80RHBOOT
 left_done=no
 right_done=no
 
-make
+case "$1" in
+    left)
+        right_done=yes
+        ;;
+    right)
+        left_done=yes
+        ;;
+    "")
+        ;;
+    *)
+        echo "error: invalid argument: $1"
+        exit 1
+        ;;
+esac
+
+if [ "${left_done}" != "yes" ]; then
+    make left
+fi
+
+if [ "${right_done}" != "yes" ]; then
+    make right
+fi
 
 while true; do
     if [ "${right_done}" = "no" -a -e "/dev/disk/by-label/${RGHT}" ]; then

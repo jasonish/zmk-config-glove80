@@ -5,10 +5,29 @@ set -x
 
 CONFIG="/app/config"
 
-west build -s zmk/app -d build/left -b glove80_lh -- -DZMK_CONFIG=${CONFIG}
-mv ./build/left/zephyr/zmk.uf2 /output/left.uf2
+side=""
+board=""
 
-west build -s zmk/app -d build/right -b glove80_rh -- -DZMK_CONFIG=${CONFIG}
-mv ./build/right/zephyr/zmk.uf2 /output/right.uf2
+case "$1" in
+    left)
+        side="left"
+        board="glove80_lh"
+        ;;
+    right)
+        side="right"
+        board="glove80_rh"
+        ;;
+    "")
+        echo "error: no side provided"
+        exit 1
+        ;;
+    *)
+        echo "error: bad side: $1"
+        exit 1
+        ;;
+esac
+
+west build -s zmk/app -d build/${side} -b ${board} -- -DZMK_CONFIG=${CONFIG}
+mv ./build/${side}/zephyr/zmk.uf2 /output/${side}.uf2
 
 chown ${PUID}:${PGID} /output/*
