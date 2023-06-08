@@ -2,10 +2,16 @@ manifest:
   remotes:
     - name: moergo-sc
       url-base: https://github.com/moergo-sc
+    - name: jasonish
+      url-base: https://github.com/jasonish
   projects:
     - name: zmk
-      remote: moergo-sc
-      revision: main
       import: app/west.yml
+
+      # remote: moergo-sc
+      # revision: main
+
+      remote: jasonish
+      revision: glove80-hold-trigger-on-release
   self:
     path: config
