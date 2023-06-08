@@ -30,8 +30,50 @@
       tapping-term-ms = <200>;
       bindings = <&mo LOWER>, <&to LOWER>;
     };
+
+    // From: https://my.glove80.com/#/layout/user/b4b61f1b-ebd3-4a59-b261-e7b9a76d25e4
+    lh_hr_mt: behavior_left_hand_home_row_mod_tap {
+      compatible = "zmk,behavior-hold-tap";
+      label = "LEFT_HAND_HOME_ROW_MOD_TAP";
+      #binding-cells = <2>;
+      flavor = "balanced";
+      tapping-term-ms = <280>;
+      quick-tap-ms = <175>;
+      global-quick-tap;
+      hold-trigger-key-positions
+        = <                            5  6  7  8  9>
+        , <                        16 17 18 19 20 21>
+        , <                        28 29 30 31 32 33>
+        , <                        40 41 42 43 44 45>
+        , <52 53 54    55 56 57    58 59 60 61 62 63>
+        , <69 70 71    72 73 74       75 76 77 78 79>
+        ;
+      hold-trigger-on-release;
+      bindings = <&kp>, <&kp>;
+    };
+
+    // From: https://my.glove80.com/#/layout/user/b4b61f1b-ebd3-4a59-b261-e7b9a76d25e4
+    rh_hr_mt: behavior_right_hand_home_row_mod_tap {
+      compatible = "zmk,behavior-hold-tap";
+      label = "RIGHT_HAND_HOME_ROW_MOD_TAP";
+      #binding-cells = <2>;
+      flavor = "balanced";
+      tapping-term-ms = <280>;
+      quick-tap-ms = <175>;
+      global-quick-tap;
+      hold-trigger-key-positions
+        = <0  1  2  3  4                            >
+        , <10 11 12 13 14 15                        >
+        , <22 23 24 25 26 27                        >
+        , <34 35 36 37 38 39                        >
+        , <46 47 48 49 50 51    52 53 54    55 56 57>
+        , <64 65 66 67 68       69 70 71    72 73 74>
+        ;
+      hold-trigger-on-release;
+      bindings = <&kp>, <&kp>;
+    };
   };
-  
+
   macros {
     rgb_ug_status_macro: rgb_ug_status_macro_0 {
       label = "RGB_UG_STATUS";
@@ -40,7 +82,7 @@
       bindings = <&rgb_ug RGB_STATUS>;
     };
   };
-  
+
   macros {
     bt_0: bt_profile_macro_0 {
       label = "BT_0";
@@ -49,7 +91,7 @@
       bindings = <&out OUT_BLE>, <&bt BT_SEL 0>;
     };
   };
-  
+
   macros {
     bt_1: bt_profile_macro_1 {
       label = "BT_1";
@@ -58,7 +100,7 @@
       bindings = <&out OUT_BLE>, <&bt BT_SEL 1>;
     };
   };
-  
+
   macros {
     bt_2: bt_profile_macro_2 {
       label = "BT_2";
@@ -67,7 +109,7 @@
       bindings = <&out OUT_BLE>, <&bt BT_SEL 2>;
     };
   };
-  
+
   macros {
     bt_3: bt_profile_macro_3 {
       label = "BT_3";
@@ -76,7 +118,7 @@
       bindings = <&out OUT_BLE>, <&bt BT_SEL 3>;
     };
   };
-  
+
   magic: magic_hold_tap {
     compatible = "zmk,behavior-hold-tap";
     label = "MAGIC_HOLD_TAP";
@@ -88,41 +130,96 @@
 
   #define PAUSE &kp PAUSE_BREAK
   #define ALT_DEL &mt LALT DEL
-  #define ALT_RET &mt LALT RET 
-  
+  #define ALT_RET &mt LALT RET
+  #define _MAGIC   &magic MAGIC 0
+
+  // Left thumbs
+  #define SFT_TAB   &mt LSHFT TAB
+  #define LGUI_HOME &mt LGUI HOME
+  #define LGUI_END  &mt LGUI END
+  #define LCTL_ESC  &mt LCTRL ESC
+
+  // Right thumbs
+  #define RGUI_PGUP &mt RGUI PG_UP
+  #define LGUI_PGDN &mt LGUI PG_DN
+  #define RSFT_TAB  &mt RSHFT TAB
+  #define RCTL_ESC  &mt RCTRL ESC
+
+  // Home row mods - QWERTY - Left
+  #define HM_A  &lh_hr_mt LGUI A
+  #define HM_S  &lh_hr_mt LALT S
+  #define HM_D  &lh_hr_mt LCTRL D
+  #define HM_F  &lh_hr_mt LSHFT F
+
+  // Home row mods - QWERTY - Right
+  #define HM_J    &rh_hr_mt LSHFT J
+  #define HM_K    &rh_hr_mt LCTRL K
+  #define HM_L    &rh_hr_mt LALT L
+  #define HM_SQT  &rh_hr_mt LGUI SQT
+  #define HM_SEMI &rh_hr_mt LGUI SEMI
+
+  #define VOL_UP  &kp C_VOL_UP
+  #define VOL_DN  &kp C_VOL_DN
+  #define _MUTE   &kp C_MUTE
+
   keymap {
     compatible = "zmk,keymap";
-    
+
     default_layer {
       bindings = <
-        &kp F1         &kp F2   &kp F3      &kp F4      &kp F5                                                /**/                                          &kp F6   &kp F7      &kp F8      &kp F9      &kp F10
+        &none          &none    &none       &kp PSCRN   &kp INS                                               /**/                                          &none    &none       _MUTE       VOL_DN      VOL_UP
         &kp EQUAL      &kp N1   &kp N2      &kp N3      &kp N4      &kp N5                                    /**/                                  &kp N6  &kp N7   &kp N8      &kp N9      &kp N0      &kp MINUS
         &kp TAB        &kp Q    &kp W       &kp E       &kp R       &kp T                                     /**/                                  &kp Y   &kp U    &kp I       &kp O       &kp P       &kp BSLH
-        &kp ESC        &kp A    &kp S       &kp D       &kp F       &kp G                                     /**/                                  &kp H   &kp J    &kp K       &kp L       &kp SEMI    &kp SQT
-        &kp GRAVE      &kp Z    &kp X       &kp C       &kp V       &kp B   &kp LSHFT   &kp LCTRL   &kp LGUI  /**/  &kp LGUI  &kp RCTRL &kp RSHFT   &kp N   &kp M    &kp COMMA   &kp DOT     &kp FSLH    &kp PG_UP
-        &magic MAGIC 0 &kp HOME &kp END     &kp LEFT    &kp RIGHT           &kp BSPC    ALT_DEL     &kp LGUI  /**/  &kp LGUI  ALT_RET   &kp SPACE           &kp DOWN &kp UP      &kp LBKT    &kp RBKT    &kp PG_DN
+        &kp ESC        HM_A     HM_S        HM_D        HM_F        &kp G                                     /**/                                  &kp H   HM_J     HM_K        HM_L        HM_SEMI     &kp SQT
+        &none          &kp Z    &kp X       &kp C       &kp V       &kp B   SFT_TAB     LCTL_ESC    LGUI_HOME /**/  RGUI_PGUP RCTL_ESC  RSFT_TAB    &kp N   &kp M    &kp COMMA   &kp DOT     &kp FSLH    &none
+        _MAGIC         &kp GRAVE &none      &kp LEFT    &kp RIGHT           &kp BSPC    ALT_DEL     LGUI_END  /**/  LGUI_PGDN ALT_RET   &lt 2 SPACE         &kp DOWN &kp UP      &kp LBKT    &kp RBKT    &none
         >;
     };
-    
-    lower_layer {
+
+    template_layer {
       bindings = <
-        &trans    &trans      &trans   &trans   &trans                                                                                               &kp C_MUTE   &kp C_VOL_DN &kp C_VOL_UP  &trans          PAUSE          
-        &trans    &none       &none    &none    &none    &trans                                                                         &trans       &trans       &trans       &trans        &trans          &kp PSCRN
-        &trans    &none       &none    &kp UP   &none    &trans                                                                         &trans       &trans       &trans       &trans        &trans          &kp SLCK
-        &trans    &none       &trans   &trans   &trans   &trans                                                                         &trans       &trans       &trans       &trans        &trans          &none
-        &trans    &trans      &none    &kp F11  &kp F12  &trans   &trans      &trans      &to DEFAULT &trans      &trans      &trans    &trans       &trans       &trans       &trans        &trans          &trans
-        &trans    &kp CAPS    &kp INS  &kp F11  &kp F12           &trans      &trans      &trans      &trans      &trans      &trans                 &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans                                            /**/                                                  &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans                                   /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans                                   /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans                                   /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans   &trans      &trans      &trans  /**/   &trans      &trans      &trans    &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans            &trans      &trans      &trans  /**/   &trans      &trans      &trans                 &trans       &trans       &trans        &trans          &trans
         >;
     };
-    
+
+    #define _BT_CLR &bt BT_CLR
+    #define _BT_CLR_ALL &bt BT_CLR_ALL
+
     magic_layer {
       bindings = <
-        &bt BT_CLR        &none               &none           &none           &none                                                                                                           &none      &none      &none      &none      &bt BT_CLR_ALL
-        &none             &none               &none           &none           &none           &none                                                                                &none      &none      &none      &none      &none      &none
-        &none             &rgb_ug RGB_SPI     &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG                                                                      &none      &none      &none      &none      &none      &none
-        &bootloader       &rgb_ug RGB_SPD     &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF                                                                      &none      &none      &none      &none      &none      &bootloader
-        &reset            &none               &none           &none           &none           &none           &bt_2     &bt_3     &none            &none     &none     &none       &none      &none      &none      &none      &none      &reset
-        &none             &none               &none           &none           &none                           &bt_0     &bt_1     &out OUT_USB     &none     &none     &none                  &none      &none      &none      &none      &to FACTORY_TEST
+        &trans            &trans              &trans          &trans          &trans                                                      /**/                                              &none      &none      &none      &none      &trans
+        _BT_CLR           &bt_0               &bt_1           &bt_2           &bt_3           _BT_CLR_ALL                                 /**/                                   &none      &none      &none      &none      &none      &trans
+        &out OUT_USB      &rgb_ug RGB_SPI     &rgb_ug RGB_SAI &rgb_ug RGB_HUI &rgb_ug RGB_BRI &rgb_ug RGB_TOG                             /**/                                   &none      &none      &none      &none      &none      &none
+        &bootloader       &rgb_ug RGB_SPD     &rgb_ug RGB_SAD &rgb_ug RGB_HUD &rgb_ug RGB_BRD &rgb_ug RGB_EFF                             /**/                                   &none      &none      &none      &none      &none      &bootloader
+        &reset            &none               &none           &none           &none           &none           &trans    &trans    &none   /**/   &none     &none     &none       &none      &none      &none      &none      &none      &reset
+        &none             &none               &none           &none           &none                           &trans    &trans    &trans  /**/   &none     &none     &none                  &none      &none      &none      &none      &trans
+        >;
+    };
+
+    function_layer_row {
+      bindings = <
+        &trans    &trans      &trans   &trans   &trans                                           /**/                                                  &trans       &trans       &trans        &trans          &trans
+        &kp F1    &kp F2      &kp F3   &kp F4   &kp F5   &kp F6                                  /**/                                     &kp F7       &kp F8       &kp F9       &kp F10       &kp F11         &kp F12
+        &trans    &trans      &trans   &trans   &trans   &trans                                  /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans                                  /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans   &trans      &trans      &trans /**/   &trans      &trans      &trans    &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans            &trans      &trans      &trans /**/   &trans      &trans      &trans                 &trans       &trans       &trans        &trans          &trans
+        >;
+    };
+
+    function_layer_pad {
+      bindings = <
+        &trans    &trans      &trans   &trans   &trans                                           /**/                                                  &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans   &trans                                  /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &kp F12     &kp F7   &kp F8   &kp F9   &trans                                  /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &kp F11     &kp F4   &kp F5   &kp F6   &trans                                  /**/                                     &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &kp F10     &kp F1   &kp F2   &kp F3   &trans   &trans      &trans      &trans /**/   &trans      &trans      &trans    &trans       &trans       &trans       &trans        &trans          &trans
+        &trans    &trans      &trans   &trans   &trans            &trans      &trans      &trans /**/   &trans      &trans      &trans                 &trans       &trans       &trans        &trans          &trans
         >;
     };
   };
